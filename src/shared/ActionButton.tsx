@@ -1,5 +1,6 @@
 import React from "react"
 import AnchorLink from "react-anchor-link-smooth-scroll"
+
 import { SelectedPage } from "./types";
 
 type Props = {
@@ -7,10 +8,14 @@ type Props = {
     setSelectedPage : (value:SelectedPage) => void;
 }
 
-const ActionButton = ({children}: Props) => {
+export default function ActionButton ({children, setSelectedPage, }: Props){
   return (
-    <AnchorLink>{children}</AnchorLink>
+    <AnchorLink 
+    className = "rounded-md bg-secondary-500 hover:bg-primary-500 p-2"
+    onClick={() =>setSelectedPage(SelectedPage.ContactUs)}
+    href={`${SelectedPage.ContactUs}`}>
+        {children}
+        </AnchorLink>
   )
 }
 
-export default ActionButton
