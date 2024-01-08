@@ -14,11 +14,13 @@ type Props = {
     setSelectedPage : (value : SelectedPage ) => void;
 }
 
-export const Navbar = ({selectedPage, setSelectedPage, isTopOfPage}: Props) => {
+export const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
     const flexBetween = "flex items-center justify-between" // je stock une partie du tailwind dans une constante mais je peux aussi la stocker dans un fichier a part 
-    const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)")
+    const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)") // ici je pass dans la fonction la string 
     const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);  // state qui met a true ou false quand on click sur le burger
-    const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow" 
+    // la couleur du bg change quand on va scroller vers le bas de la page 
+    // si isTopOfPage === true => vide sinon le background sera rose
+    const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow"  
 
   return (
     <nav className="shadow-sm">
@@ -49,27 +51,27 @@ export const Navbar = ({selectedPage, setSelectedPage, isTopOfPage}: Props) => {
                         className="rounded-full bg-secondary-500 p-2" 
                         onClick= {()=> setIsMenuToggled(!isMenuToggled)}>
                             <Bars3Icon className={tailwindClasses.burgerMenu}/>
-                        </button> 
+                        </button> // mobile button
                     )}
                 </div>
             </div>
         </div>
 
-        {/* MOBILE MENU MODAL */}
+        {/* MOBILE MENU MODAL :
+         condition if screen === true and isMenuToggle === true */}
         {!isAboveMediumScreens && isMenuToggled && (
             <div className="fixed right-0 bottom-0 z-40 h-full w-[300px] bg-primary-100 drop-shadow-xl">
                 {/* CLOSE ICON */}
                 <div className="flex justify-end p-10 border-2 border-rose-500 ">
-
                      <XMarkIcon className="h-6 w-6" onClick={()=>setIsMenuToggled(!isMenuToggled)}/>
                 </div>
-
+                {/* Menu Items */}
                 <div className="ml-[33%] flex flex-col gap-10 text-2xl">
-                                <Link page = "Home"  selectedPage = {selectedPage} setSelectedPage = {setSelectedPage}/>
+                <Link page = "Home"  selectedPage = {selectedPage} setSelectedPage = {setSelectedPage}/>
                                 <Link page = "Benefits" selectedPage = {selectedPage} setSelectedPage = {setSelectedPage}/>
                                 <Link page = "Our classes" selectedPage = {selectedPage} setSelectedPage = {setSelectedPage}/>
                                 <Link page = "Contact Us" selectedPage = {selectedPage} setSelectedPage = {setSelectedPage}/>
-                            </div>
+                </div>
 
             </div>
         )}
